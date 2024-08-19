@@ -36,8 +36,8 @@ const ProdutoHome = ({
     </Infos>
     <Avaliacao>
       <Titulo>{title}</Titulo>
-      <p>{assessment}</p>
       <div>
+        <p>{assessment}</p>
         <img src={estrela} alt="estrela" />
       </div>
     </Avaliacao>

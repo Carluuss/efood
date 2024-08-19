@@ -4,14 +4,16 @@ import { cores } from '../../style'
 export const Card = styled.div`
   background-color: ${cores.branco};
   color: ${cores.vermelho};
-  max-width: 480px;
+  max-width: 470px;
   position: relative;
   border: 1px solid ${cores.vermelho};
 `
 export const Titulo = styled.h3`
   font-weight: bold;
-  font-size: 16px;
+  font-size: 18px;
   margin-bottom: 16px;
+  text-align: center;
+  white-space: nowrap;
 `
 export const Descricao = styled.p`
   font-weight: 400;
@@ -32,6 +34,7 @@ export const Botao = styled.button`
 `
 export const Image = styled.img`
   width: 100%;
+  height: 217px;
   display: block;
 `
 
@@ -43,18 +46,22 @@ export const Infos = styled.div`
 export const Avaliacao = styled.div`
   display: flex;
   justify-content: space-between;
-  align-itens: center;
   margin-top: 8px;
   padding: 8px;
 
-  img {
-    display: block;
-  }
-
   p {
-    margin-left: 310px;
     font-weight: bold;
     font-size: 18px;
     line-height: 22px;
+  }
+
+  div {
+    display: flex;
+    align-items: center;
+  }
+
+  img {
+    display: inline-block;
+    margin-left: 8px;
   }
 `
