@@ -14,7 +14,7 @@ export const Hero = styled.div`
 `
 export const Paragrafo = styled.p`
   font-size: 32px;
-  font-weight: 100;
+  font-weight: lighter;
   padding-top: 25px;
   padding-bottom: 220px;
 `
