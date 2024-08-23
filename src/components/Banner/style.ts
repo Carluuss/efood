@@ -21,4 +21,5 @@ export const Paragrafo = styled.p`
 `
 export const Titulo = styled.h2`
   font-size: 32px;
+  padding-top: 100px;
 `
