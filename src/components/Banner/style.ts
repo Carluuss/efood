@@ -4,7 +4,7 @@ import backgroundImage from '../../assets/massa.png'
 
 export const Hero = styled.div`
   display: block;
-  height: 280px;
+  height: 380px;
   background-repeat: no-repeat;
   background-size: cover;
   background-color: rgba(0, 0, 0, 0.5);
