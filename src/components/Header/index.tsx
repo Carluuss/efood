@@ -1,18 +1,14 @@
 import { HeaderBar } from './style'
 
-import backgroundImg from '../../assets/background.png'
-
 import logo from '../../assets/logo.png'
 const Header = () => (
-  <HeaderBar style={{ backgroundImage: `url(${backgroundImg})` }}>
+  <HeaderBar>
     <div className="container">
-      <div>
-        <a>Restaurantes</a>
-      </div>
-      <div>
-        <img src={logo} alt="Logo" />
-      </div>
-      <span>0 produto(s) no carrinho</span>
+      <p>Restaurantes</p>
+
+      <img src={logo} alt="Logo" />
+
+      <p>0 produto(s) no carrinho</p>
     </div>
   </HeaderBar>
 )

@@ -5,7 +5,6 @@ export const Card = styled.div`
   background-color: ${cores.vermelho};
   padding: 8px;
   color: ${cores.bege};
-  max-width: 320px;
 `
 export const Titulo = styled.h3`
   font-weight: bold;
@@ -31,5 +30,6 @@ export const Botao = styled.button`
 `
 export const Image = styled.img`
   width: 100%;
+  height: 167px;
   display: inline-block;
 `

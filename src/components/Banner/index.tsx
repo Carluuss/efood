@@ -1,8 +1,7 @@
-import backgroundImage from '../../assets/massa.png'
 import { Hero, Paragrafo, Titulo } from './style'
 
 const Banner = () => (
-  <Hero style={{ backgroundImage: `url(${backgroundImage})` }}>
+  <Hero>
     <div className="container">
       <Paragrafo>Italiana</Paragrafo>
       <Titulo>La Dolce Vita Trattoria</Titulo>
