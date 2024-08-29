@@ -17,9 +17,8 @@ export const Paragrafo = styled.p`
   font-size: 32px;
   font-weight: lighter;
   padding-top: 25px;
-  padding-bottom: 150px;
 `
-export const Titulo = styled.h2`
+export const Titulo = styled.h1`
   font-size: 32px;
-  padding-top: 100px;
+  padding-top: 240px;
 `

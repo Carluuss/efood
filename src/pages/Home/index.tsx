@@ -1,8 +1,8 @@
 import HeaderHome from '../../components/HeaderHome'
-import ItemHome from '../../models/itemHome'
 import sushi from '../../assets/sushi.png'
 import massa from '../../assets/massa.png'
 import ListaHome from '../../components/ListaHome'
+import ItemHome from '../../models/itemHome'
 
 const DestaqueHome: ItemHome[] = [
   {

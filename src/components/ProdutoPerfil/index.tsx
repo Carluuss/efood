@@ -4,14 +4,15 @@ type Props = {
   title: string
   description: string
   image: string
+  onClick?: () => void
 }
 
-const ProdutoPerfil = ({ title, description, image }: Props) => (
-  <Card>
+const ProdutoPerfil = ({ title, description, image, onClick }: Props) => (
+  <Card onClick={onClick}>
     <Image src={image} alt={title} />
     <Titulo>{title}</Titulo>
     <Descricao>{description}</Descricao>
-    <Botao>Adicionar carrinho</Botao>
+    <Botao onClick={onClick}>Ver detalhes</Botao>
   </Card>
 )
 
