@@ -5,6 +5,7 @@ export const Card = styled.div`
   background-color: ${cores.vermelho};
   padding: 8px;
   color: ${cores.bege};
+  border-radius: 5px;
 `
 export const Titulo = styled.h3`
   font-weight: bold;
