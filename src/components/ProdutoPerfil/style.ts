@@ -20,7 +20,7 @@ export const Descricao = styled.p`
 export const Botao = styled.button`
   background-color: ${cores.bege};
   color: ${cores.vermelho};
-  padding: 8px;
+  padding: 3px 5px;
   cursor: pointer;
   width: 100%;
   border: none;

@@ -12,7 +12,7 @@ export type Props = {
 
 interface ModalState {
   isVisible: boolean
-  cardapio?: Cardapio[]
+  cardapio?: Cardapio
 }
 
 export const formataPreco = (preco = 0) => {
@@ -34,42 +34,42 @@ const ListaPerfil = ({ item }: Props) => {
 
   return (
     <div className="container">
-      <List>
-        {item.map((item, index) => (
-          <ProdutoPerfil
-            key={item.id}
-            description={item.descricao}
-            image={item.capa}
-            title={item.titulo}
-            onClick={() => {
-              setModal({
-                isVisible: true,
-                cardapio: item.cardapio
-              })
-            }}
-          />
-        ))}
-      </List>
+      {item.map((item, index) => (
+        <List key={item.id}>
+          {item.cardapio.map((cardapio) => (
+            <ProdutoPerfil
+              key={cardapio.id}
+              description={cardapio.descricao}
+              image={cardapio.foto}
+              title={cardapio.nome}
+              onClick={() => {
+                setModal({
+                  isVisible: true,
+                  cardapio: cardapio
+                })
+              }}
+            />
+          ))}
+        </List>
+      ))}
 
       <Modal className={modal.isVisible ? 'visivel' : ''}>
         <ModalContent>
-          {modal.cardapio?.map((cardItem) => (
-            <Content key={cardItem.id}>
-              <img onClick={() => closeModal()} src={close} alt="close" />
-              <header>
-                <img src={cardItem.foto} alt={cardItem.nome} />
-                <div>
-                  <h4>{cardItem.nome}</h4>
+          <Content key={modal.cardapio?.id}>
+            <img onClick={() => closeModal()} src={close} alt="close" />
+            <header>
+              <img src={modal.cardapio?.foto} alt={modal.cardapio?.nome} />
+              <div>
+                <h4>{modal.cardapio?.nome}</h4>
 
-                  <p>{cardItem.descricao}</p>
-                  <span>{cardItem.porcao}</span>
-                  <Botao>
-                    Adicionar ao carrinho - {formataPreco(cardItem.preco)}
-                  </Botao>
-                </div>
-              </header>
-            </Content>
-          ))}
+                <p>{modal.cardapio?.descricao}</p>
+                <span>{modal.cardapio?.porcao}</span>
+                <Botao>
+                  Adicionar ao carrinho - {formataPreco(modal.cardapio?.preco)}
+                </Botao>
+              </div>
+            </header>
+          </Content>
         </ModalContent>
         <div className="overlay" onClick={() => closeModal()}></div>
       </Modal>

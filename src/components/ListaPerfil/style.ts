@@ -46,6 +46,7 @@ export const ModalContent = styled.div`
   header {
     display: flex;
     gap: 20px;
+    padding: 22px;
 
     h4 {
       font-size: 18px;
@@ -63,8 +64,8 @@ export const ModalContent = styled.div`
   }
 
   header > img {
-    width: 218px;
-    height: 218px;
+    width: 280px;
+    height: 280px;
     object-fit: cover;
   }
 
@@ -83,6 +84,6 @@ export const Content = styled.div`
   align-items: end;
 
   > img {
-    margin: 8px;
+    cursor: pointer;
   }
 `

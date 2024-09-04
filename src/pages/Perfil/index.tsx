@@ -6,12 +6,12 @@ import Header from '../../components/Header'
 import { useEffect, useState } from 'react'
 
 export interface Cardapio {
-  foto?: string
+  foto: string
   preco?: number
-  id?: number
-  nome?: string
-  descricao?: string
-  porcao?: string
+  id: number
+  nome: string
+  descricao: string
+  porcao: string
 }
 
 export type Item = {
