@@ -1,13 +1,14 @@
 import Banner from '../../components/Banner'
 import ListaPerfil from '../../components/ListaPerfil'
 
-import pizza from '../../assets/pizza.png'
 import Header from '../../components/Header'
-import { useEffect, useState } from 'react'
+
+import { useGetItemQuery } from '../../services/api'
+import Sidebar from '../../components/Sidebar'
 
 export interface Cardapio {
   foto: string
-  preco?: number
+  preco: number
   id: number
   nome: string
   descricao: string
@@ -26,21 +27,19 @@ export type Item = {
 }
 
 const Perfil = () => {
-  const [itemPerfil, setItemPerfil] = useState<Item[]>([])
+  const { data: itemPerfil } = useGetItemQuery()
 
-  useEffect(() => {
-    fetch('https://fake-api-tau.vercel.app/api/efood/restaurantes')
-      .then((res) => res.json())
-      .then((res) => setItemPerfil(res))
-  })
-
-  return (
-    <>
-      <Header />
-      <Banner />
-      <ListaPerfil item={itemPerfil} />
-    </>
-  )
+  if (itemPerfil) {
+    return (
+      <>
+        <Header />
+        <Banner />
+        <ListaPerfil item={itemPerfil} />
+        <Sidebar />
+      </>
+    )
+  }
+  return <h4>Carregando...</h4>
 }
 
 export default Perfil

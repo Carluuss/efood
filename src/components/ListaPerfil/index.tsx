@@ -5,6 +5,8 @@ import { Content, List, Modal, ModalContent } from './style'
 
 import close from '../../assets/close.png'
 import { Botao } from '../ProdutoPerfil/style'
+import { add, open } from '../../store/reducers/cart'
+import { useDispatch } from 'react-redux'
 
 export type Props = {
   item: Item[]
@@ -22,7 +24,7 @@ export const formataPreco = (preco = 0) => {
   }).format(preco)
 }
 
-const ListaPerfil = ({ item }: Props) => {
+const ListaPerfil = ({ item }: Props, { cardapio }: Item) => {
   const [modal, setModal] = useState<ModalState>({
     isVisible: false
   })
@@ -31,6 +33,13 @@ const ListaPerfil = ({ item }: Props) => {
     setModal({
       isVisible: false
     })
+
+  const dispatch = useDispatch()
+
+  // const addToCart = () => {
+  //   dispatch(add(cardapio))
+  //   dispatch(open())
+  // }
 
   return (
     <div className="container">
