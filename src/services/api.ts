@@ -9,7 +9,7 @@ const api = createApi({
     getItem: builder.query<Item[], void>({
       query: () => 'restaurantes'
     }),
-    getItemId: builder.query<Item[], number>({
+    getItemId: builder.query<Item, string>({
       query: (id) => `restaurantes/${id}`
     })
   })

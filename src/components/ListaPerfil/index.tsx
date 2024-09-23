@@ -24,7 +24,7 @@ export const formataPreco = (preco = 0) => {
   }).format(preco)
 }
 
-const ListaPerfil = ({ item }: Props, { cardapio }: Item) => {
+const ListaPerfil = ({ item }: Props) => {
   const [modal, setModal] = useState<ModalState>({
     isVisible: false
   })
@@ -36,10 +36,12 @@ const ListaPerfil = ({ item }: Props, { cardapio }: Item) => {
 
   const dispatch = useDispatch()
 
-  // const addToCart = () => {
-  //   dispatch(add(cardapio))
-  //   dispatch(open())
-  // }
+  const addToCart = () => {
+    if (modal.cardapio) {
+      dispatch(add(modal.cardapio)) // Passa o cardapio, que é do tipo Cardapio
+      dispatch(open()) // Abre o modal de carrinho
+    }
+  }
 
   return (
     <div className="container">
@@ -73,7 +75,7 @@ const ListaPerfil = ({ item }: Props, { cardapio }: Item) => {
 
                 <p>{modal.cardapio?.descricao}</p>
                 <span>{modal.cardapio?.porcao}</span>
-                <Botao>
+                <Botao onClick={addToCart}>
                   Adicionar ao carrinho - {formataPreco(modal.cardapio?.preco)}
                 </Botao>
               </div>

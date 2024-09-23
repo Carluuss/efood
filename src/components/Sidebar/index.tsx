@@ -14,10 +14,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
 import { formataPreco } from '../ListaPerfil'
 import { close, remove } from '../../store/reducers/cart'
-import { Item } from '../../pages/Perfil'
+import { Cardapio, Item } from '../../pages/Perfil'
 
 const Sidebar = () => {
-  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
+  const { isOpen, cardapio } = useSelector((state: RootReducer) => state.cart)
 
   const dispatch = useDispatch()
 
@@ -26,12 +26,8 @@ const Sidebar = () => {
   }
 
   const getTotalPrice = () => {
-    return items.reduce((acumulador, item: Item) => {
-      const valorAtual = item.cardapio
-        .map((cardapio) => cardapio.preco)
-        .reduce((soma, preco) => soma + preco, 0)
-
-      return acumulador + valorAtual
+    return cardapio.reduce((acumulador, valorAtual) => {
+      return (acumulador += valorAtual.preco!)
     }, 0)
   }
 
@@ -40,20 +36,18 @@ const Sidebar = () => {
   }
   return (
     <CardContainer className={isOpen ? 'is-open' : ''}>
-      <Overlay />
+      <Overlay onClick={closeCart} />
       <Aside>
-        {items.map((item) => (
-          <ul key={item.id}>
-            {item.cardapio.map((cardapio) => (
-              <CardIitem key={cardapio.id}>
-                <Image src={cardapio.foto} alt={cardapio.nome} />
-                <div>
-                  <h3>{cardapio.nome}</h3>
-                  <Price>{formataPreco(cardapio.preco)}</Price>
-                  <Icon />
-                </div>
-              </CardIitem>
-            ))}
+        {cardapio.map((cardapio) => (
+          <ul key={cardapio.id}>
+            <CardIitem key={cardapio.id}>
+              <Image src={cardapio.foto} alt={cardapio.nome} />
+              <div>
+                <h3>{cardapio.nome}</h3>
+                <Price>{formataPreco(cardapio.preco)}</Price>
+                <Icon onClick={() => removeItem(cardapio.id)} />
+              </div>
+            </CardIitem>
           </ul>
         ))}
 
