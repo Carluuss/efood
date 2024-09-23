@@ -38,8 +38,8 @@ const ListaPerfil = ({ item }: Props) => {
 
   const addToCart = () => {
     if (modal.cardapio) {
-      dispatch(add(modal.cardapio)) // Passa o cardapio, que é do tipo Cardapio
-      dispatch(open()) // Abre o modal de carrinho
+      dispatch(add(modal.cardapio))
+      dispatch(open())
     }
   }
 
