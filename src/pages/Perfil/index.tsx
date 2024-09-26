@@ -3,8 +3,9 @@ import ListaPerfil from '../../components/ListaPerfil'
 
 import Header from '../../components/Header'
 
-import { useGetItemQuery } from '../../services/api'
+import { useGetItemIdQuery, useGetItemQuery } from '../../services/api'
 import Sidebar from '../../components/Sidebar'
+import { useParams } from 'react-router-dom'
 
 export interface Cardapio {
   foto: string
@@ -23,18 +24,28 @@ export type Item = {
   avaliacao: number
   descricao: string
   capa: string
-  cardapio: Cardapio[]
+  cardapio: [
+    {
+      foto: string
+      preco: number
+      id: number
+      nome: string
+      descricao: string
+      porcao: string
+    }
+  ]
 }
 
 const Perfil = () => {
-  const { data: itemPerfil } = useGetItemQuery()
+  const { id } = useParams()
+  const { data: comida } = useGetItemIdQuery(id!)
 
-  if (itemPerfil) {
+  if (comida) {
     return (
       <>
         <Header />
-        <Banner />
-        <ListaPerfil item={itemPerfil} />
+        <Banner tipo={comida.tipo} title={comida.titulo} image={comida.capa} />
+        <ListaPerfil item={comida} />
         <Sidebar />
       </>
     )

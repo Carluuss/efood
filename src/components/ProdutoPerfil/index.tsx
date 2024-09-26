@@ -1,4 +1,3 @@
-import { Cardapio } from '../../pages/Perfil'
 import { Botao, Card, Descricao, Titulo, Image } from './style'
 
 type Props = {
@@ -6,7 +5,6 @@ type Props = {
   description?: string
   image?: string
   onClick?: () => void
-  cardapio?: Cardapio[]
 }
 
 const ProdutoPerfil = ({ title, description = '', image, onClick }: Props) => {

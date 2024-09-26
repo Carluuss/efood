@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { cores } from '../../style'
+import { Link } from 'react-router-dom'
 
 export const Card = styled.div`
   background-color: ${cores.branco};
@@ -22,8 +23,9 @@ export const Descricao = styled.p`
   padding: 0 8px;
 `
 
-export const Botao = styled.button`
+export const Botao = styled(Link)`
   background-color: ${cores.vermelho};
+  display: inline-block;
   color: ${cores.bege};
   padding: 6px;
   cursor: pointer;

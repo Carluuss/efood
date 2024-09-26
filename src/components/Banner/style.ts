@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { cores } from '../../style'
 import backgroundImage from '../../assets/massa.png'
 
-export const Hero = styled.div`
+export const Hero = styled.div<{ backgroundImage: string }>`
   display: block;
   height: 380px;
   background-repeat: no-repeat;
@@ -11,7 +11,8 @@ export const Hero = styled.div`
   background-blend-mode: overlay;
   background-position: center;
   color: ${cores.branco};
-  background-image: url(${backgroundImage});
+  background-image: url(${(props) =>
+    props.backgroundImage}); /* Aqui usamos a prop */
 `
 export const Paragrafo = styled.p`
   font-size: 32px;

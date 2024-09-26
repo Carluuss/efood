@@ -17,6 +17,7 @@ type Props = {
   image: string
   assessment: number
   infos: string[]
+  linkPage: string
 }
 
 const ProdutoHome = ({
@@ -24,7 +25,8 @@ const ProdutoHome = ({
   description,
   image,
   assessment,
-  infos
+  infos,
+  linkPage
 }: Props) => (
   <Card>
     <Image src={image} alt={title} />
@@ -42,7 +44,7 @@ const ProdutoHome = ({
       </div>
     </Avaliacao>
     <Descricao>{description}</Descricao>
-    <Botao>Saiba mais</Botao>
+    <Botao to={linkPage}>Saiba mais</Botao>
   </Card>
 )
 

@@ -1,10 +1,16 @@
 import { Hero, Paragrafo, Titulo } from './style'
 
-const Banner = () => (
-  <Hero>
+type Props = {
+  title: string
+  image: string
+  tipo?: string
+}
+
+const Banner = ({ title, image, tipo }: Props) => (
+  <Hero backgroundImage={image}>
     <div className="container">
-      <Paragrafo>Italiana</Paragrafo>
-      <Titulo>La Dolce Vita Trattoria</Titulo>
+      <Paragrafo>{tipo}</Paragrafo>
+      <Titulo>{title}</Titulo>
     </div>
   </Hero>
 )

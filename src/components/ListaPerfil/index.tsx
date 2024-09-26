@@ -9,7 +9,7 @@ import { add, open } from '../../store/reducers/cart'
 import { useDispatch } from 'react-redux'
 
 export type Props = {
-  item: Item[]
+  item: Item
 }
 
 interface ModalState {
@@ -45,24 +45,22 @@ const ListaPerfil = ({ item }: Props) => {
 
   return (
     <div className="container">
-      {item.map((item, index) => (
-        <List key={item.id}>
-          {item.cardapio.map((cardapio) => (
-            <ProdutoPerfil
-              key={cardapio.id}
-              description={cardapio.descricao}
-              image={cardapio.foto}
-              title={cardapio.nome}
-              onClick={() => {
-                setModal({
-                  isVisible: true,
-                  cardapio: cardapio
-                })
-              }}
-            />
-          ))}
-        </List>
-      ))}
+      <List key={item.id}>
+        {item.cardapio.map((cardapio) => (
+          <ProdutoPerfil
+            key={cardapio.id}
+            description={cardapio.descricao}
+            image={cardapio.foto}
+            title={cardapio.nome}
+            onClick={() => {
+              setModal({
+                isVisible: true,
+                cardapio: cardapio
+              })
+            }}
+          />
+        ))}
+      </List>
 
       <Modal className={modal.isVisible ? 'visivel' : ''}>
         <ModalContent>

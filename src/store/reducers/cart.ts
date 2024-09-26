@@ -2,11 +2,13 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Cardapio, Item } from '../../pages/Perfil'
 
 type CardState = {
+  items: Item[]
   isOpen: boolean
   cardapio: Cardapio[]
 }
 
 const initialState: CardState = {
+  items: [],
   cardapio: [],
   isOpen: false
 }
