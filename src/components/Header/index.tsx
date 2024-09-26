@@ -1,4 +1,4 @@
-import { HeaderBar } from './style'
+import { HeaderBar, Links } from './style'
 
 import logo from '../../assets/logo.png'
 import { useSelector } from 'react-redux'
@@ -10,9 +10,9 @@ const Header = () => {
   return (
     <HeaderBar>
       <div className="container">
-        <Link to={'/'}>
+        <Links to={'/'}>
           <p>Restaurantes</p>
-        </Link>
+        </Links>
 
         <Link to={'/'}>
           <img src={logo} alt="Logo" />

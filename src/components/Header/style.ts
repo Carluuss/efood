@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { cores } from '../../style'
 import backgroundImg from '../../assets/background.png'
+import { Link } from 'react-router-dom'
 
 export const HeaderBar = styled.header`
   color: ${cores.vermelho};
@@ -19,4 +20,9 @@ export const HeaderBar = styled.header`
   img {
     display: block;
   }
+`
+
+export const Links = styled(Link)`
+  text-decoration: none;
+  color: ${cores.vermelho};
 `
