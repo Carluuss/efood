@@ -21,7 +21,7 @@ const ListaHome = ({ item }: Props) => {
             image={item.capa}
             title={item.titulo}
             assessment={item.avaliacao}
-            infos={[item.destacado ? destaque : '', item.tipo]}
+            infos={[item.destacado ? destaque : '', item.tipo].filter(Boolean)}
             linkPage={`/restaurantes/${item.id}`}
           />
         ))}
