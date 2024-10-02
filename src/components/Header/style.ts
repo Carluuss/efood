@@ -26,3 +26,6 @@ export const Links = styled(Link)`
   text-decoration: none;
   color: ${cores.vermelho};
 `
+export const Text = styled.p`
+  cursor: pointer;
+`
