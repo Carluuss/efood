@@ -1,6 +1,4 @@
 import HeaderHome from '../../components/HeaderHome'
-import sushi from '../../assets/sushi.png'
-import massa from '../../assets/massa.png'
 import ListaHome from '../../components/ListaHome'
 import { useGetItemQuery } from '../../services/api'
 

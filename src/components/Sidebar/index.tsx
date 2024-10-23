@@ -2,10 +2,12 @@ import {
   Aside,
   CardContainer,
   CardIitem,
+  CartStage,
   Icon,
   Image,
   Overlay,
-  Price
+  Price,
+  Row
 } from './style'
 
 import pizza from '../../assets/pizza.png'
@@ -13,11 +15,14 @@ import { Botao } from '../ProdutoPerfil/style'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
 import { formataPreco } from '../ListaPerfil'
-import { close, remove } from '../../store/reducers/cart'
+import { close, remove, startCheckout } from '../../store/reducers/cart'
 import { Cardapio, Item } from '../../pages/Perfil'
+import Checkout from '../Checkout'
 
 const Sidebar = () => {
-  const { isOpen, cardapio } = useSelector((state: RootReducer) => state.cart)
+  const { isOpen, cardapio, isAddress, isCart } = useSelector(
+    (state: RootReducer) => state.cart
+  )
 
   const dispatch = useDispatch()
 
@@ -31,6 +36,14 @@ const Sidebar = () => {
     }, 0)
   }
 
+  const activeCheckout = () => {
+    if (getTotalPrice() > 0) {
+      dispatch(startCheckout())
+    } else {
+      alert('Não há itens no carrinho')
+    }
+  }
+
   const removeItem = (id: number) => {
     dispatch(remove(id))
   }
@@ -38,24 +51,28 @@ const Sidebar = () => {
     <CardContainer className={isOpen ? 'is-open' : ''}>
       <Overlay onClick={closeCart} />
       <Aside>
-        {cardapio.map((cardapio) => (
-          <ul key={cardapio.id}>
-            <CardIitem key={cardapio.id}>
-              <Image src={cardapio.foto} alt={cardapio.nome} />
-              <div>
-                <h3>{cardapio.nome}</h3>
-                <Price>{formataPreco(cardapio.preco)}</Price>
-                <Icon onClick={() => removeItem(cardapio.id)} />
-              </div>
-            </CardIitem>
-          </ul>
-        ))}
+        <CartStage className={!isCart ? 'is-checkout' : ''}>
+          {cardapio.map((cardapio) => (
+            <ul key={cardapio.id}>
+              <CardIitem key={cardapio.id}>
+                <Image src={cardapio.foto} alt={cardapio.nome} />
+                <div>
+                  <h3>{cardapio.nome}</h3>
+                  <Price>{formataPreco(cardapio.preco)}</Price>
+                  <Icon onClick={() => removeItem(cardapio.id)} />
+                </div>
+              </CardIitem>
+            </ul>
+          ))}
 
-        <div>
-          <p>Valor total</p>
-          <p>{formataPreco(getTotalPrice())}</p>
-        </div>
-        <Botao>Continuar com a entrega</Botao>
+          <Row>
+            <p>Valor total</p>
+            <p>{formataPreco(getTotalPrice())}</p>
+          </Row>
+          <Botao onClick={activeCheckout}>Continuar com a entrega</Botao>
+        </CartStage>
+
+        <Checkout checkoutStart={isAddress} valorTotal={getTotalPrice()} />
       </Aside>
     </CardContainer>
   )

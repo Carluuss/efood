@@ -38,7 +38,6 @@ export const Aside = styled.aside`
     display: flex;
     color: ${cores.bege};
     justify-content: space-between;
-    margin: 40px 0 16px 0;
   }
 
   ${Botao} {
@@ -65,6 +64,11 @@ export const Price = styled.span`
   padding-top: 16px;
 `
 
+export const Row = styled.div`
+  display: flex;
+  justify-content: space-between;
+`
+
 export const Image = styled.img`
   height: 80px;
   width: 80px;
@@ -82,4 +86,12 @@ export const Icon = styled.button`
   bottom: 8px;
   right: 8px;
   cursor: pointer;
+`
+
+export const CartStage = styled.div`
+  display: flex;
+  flex-direction: column;
+  &.is-checkout {
+    display: none;
+  }
 `
