@@ -1,5 +1,5 @@
 import * as Yup from 'yup'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Botao } from '../../components/ProdutoPerfil/style'
 import InputMask from 'react-input-mask'
 import {
@@ -25,6 +25,7 @@ import {
 } from '../../store/reducers/cart'
 import { useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
+import { hasFormSubmit } from '@testing-library/user-event/dist/utils'
 
 type Props = {
   checkoutStart?: boolean
@@ -32,7 +33,7 @@ type Props = {
 }
 
 const Checkout = ({ checkoutStart, valorTotal }: Props) => {
-  const [purchase, { isSuccess, data }] = usePurchaseMutation()
+  const [purchase, { isSuccess, data, isError }] = usePurchaseMutation()
 
   const dispatch = useDispatch()
 
@@ -94,25 +95,11 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
       mesDeVencimento: ''
     },
     validationSchema: Yup.object({
-      remetente: Yup.string()
-        .min(5, 'O nome precisa ter pelo menos 5 caracteres')
-        .required('O campo é obrigatório'),
-      endereco: Yup.string()
-        .min(5, 'O nome precisa ter pelo menos 5 caracteres')
-        .required('O campo é obrigatório'),
-      cidade: Yup.string()
-        .min(5, 'O nome precisa ter pelo menos 5 caracteres')
-        .required('O campo é obrigatório'),
-      cep: Yup.string()
-        .min(8, 'O nome precisa ter pelo menos 8 caracteres')
-        .required('O campo é obrigatório'),
-      numero: Yup.string()
-        .min(3, 'O nome precisa ter pelo menos 3 caracteres')
-        .required('O campo é obrigatório'),
-      complemento: Yup.string().min(
-        5,
-        'O nome precisa ter pelo menos 5 caracteres'
-      ),
+      remetente: Yup.string().required('O campo é obrigatório'),
+      endereco: Yup.string().required('O campo é obrigatório'),
+      cidade: Yup.string().required('O campo é obrigatório'),
+      cep: Yup.string().required('O campo é obrigatório'),
+      numero: Yup.string().required('O campo é obrigatório'),
 
       cardName: Yup.string().when((values, schema) =>
         isPayment ? schema.required('O campo é obrigatório') : schema
@@ -139,15 +126,19 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
     }),
 
     onSubmit: (values) => {
-      const firstProduct = cardapio[0]
+      const products = cardapio.map((item) => ({
+        id: item.id,
+        price: item.preco
+      }))
+
       purchase({
         delivery: {
           receiver: values.remetente,
           address: {
-            city: values.cidade,
             description: values.endereco,
-            number: Number(values.numero),
+            city: values.cidade,
             zipCode: values.cep,
+            number: Number(values.numero),
             complement: values.complemento
           }
         },
@@ -162,27 +153,32 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
             }
           }
         },
-        products: [
-          {
-            id: firstProduct.id,
-            price: firstProduct.preco
-          }
-        ]
+        products
       })
     }
   })
 
-  const checkInputHasError = (fieldName: string) => {
+  const checkInputHasError = (fieldName: string, message?: string) => {
     const isTouched = fieldName in form.touched
     const isInvalid = fieldName in form.errors
-    const hasError = isTouched && isInvalid
-
-    return hasError
+    if (isTouched && isInvalid) {
+      return message
+    }
+    return ''
   }
 
+  useEffect(() => {
+    if (isSuccess && data) {
+      console.log('Compra realizada com sucesso', data)
+    }
+    if (isError) {
+      console.error('Erro ao realizar a compra')
+    }
+  }, [isSuccess, isError, data])
+
   return (
-    <Form onSubmit={form.handleSubmit}>
-      {isConfirmed && data ? (
+    <>
+      {isConfirmed && isSuccess && data ? (
         <ConfirmedContainer>
           <Title>Pedido realizado - {data.orderId}</Title>
           <span className="margin-top">
@@ -207,7 +203,7 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
           </Botao>
         </ConfirmedContainer>
       ) : (
-        <>
+        <Form onSubmit={form.handleSubmit}>
           <DeliveryContainer className={checkoutStart ? 'show' : ''}>
             <Title>Entrega</Title>
             <InputGroup>
@@ -221,6 +217,9 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                 onBlur={form.handleBlur}
                 className={checkInputHasError('remetente') ? 'error' : ''}
               />
+              <small>
+                {checkInputHasError('remetente', form.errors.remetente)}
+              </small>
             </InputGroup>
             <InputGroup>
               <label htmlFor="endereco">Endereço</label>
@@ -233,6 +232,9 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                 onBlur={form.handleBlur}
                 className={checkInputHasError('endereco') ? 'error' : ''}
               />
+              <small>
+                {checkInputHasError('endereco', form.errors.endereco)}
+              </small>
             </InputGroup>
             <InputGroup>
               <label htmlFor="cidade">Cidade</label>
@@ -245,6 +247,7 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                 onBlur={form.handleBlur}
                 className={checkInputHasError('cidade') ? 'error' : ''}
               />
+              <small>{checkInputHasError('cidade', form.errors.cidade)}</small>
             </InputGroup>
             <Row>
               <InputGroup>
@@ -259,6 +262,7 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                   className={checkInputHasError('cep') ? 'error' : ''}
                   mask="99999-999"
                 />
+                <small>{checkInputHasError('cep', form.errors.cep)}</small>
               </InputGroup>
               <InputGroup>
                 <label htmlFor="numero">Número</label>
@@ -272,6 +276,9 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                   className={checkInputHasError('numero') ? 'error' : ''}
                   mask="999"
                 />
+                <small>
+                  {checkInputHasError('numero', form.errors.numero)}
+                </small>
               </InputGroup>
             </Row>
             <InputGroup>
@@ -285,7 +292,7 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                 onBlur={form.handleBlur}
               />
             </InputGroup>
-            <Botao className="margin-top" type="submit" onClick={activePayment}>
+            <Botao className="margin-top" type="button" onClick={activePayment}>
               Continuar com o pagamento
             </Botao>
             <Botao onClick={backCart}>Voltar para o carrinho</Botao>
@@ -305,6 +312,9 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                 onBlur={form.handleBlur}
                 className={checkInputHasError('cardName') ? 'error' : ''}
               />
+              <small>
+                {checkInputHasError('cardName', form.errors.cardName)}
+              </small>
             </InputGroup>
             <Row>
               <InputGroup>
@@ -319,6 +329,9 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                   className={checkInputHasError('cardNumber') ? 'error' : ''}
                   mask="9999 9999 9999 9999"
                 />
+                <small>
+                  {checkInputHasError('cardNumber', form.errors.cardNumber)}
+                </small>
               </InputGroup>
               <InputGroup>
                 <label htmlFor="cvv">CVV</label>
@@ -332,6 +345,7 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                   className={checkInputHasError('cvv') ? 'error' : ''}
                   mask="999"
                 />
+                <small>{checkInputHasError('cvv', form.errors.cvv)}</small>
               </InputGroup>
             </Row>
             <Row>
@@ -349,6 +363,12 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                   }
                   mask="99"
                 />
+                <small>
+                  {checkInputHasError(
+                    'mesDeVencimento',
+                    form.errors.mesDeVencimento
+                  )}
+                </small>
               </InputGroup>
               <InputGroup>
                 <label htmlFor="anoDeVencimento">Ano de vencimento</label>
@@ -362,22 +382,30 @@ const Checkout = ({ checkoutStart, valorTotal }: Props) => {
                   className={
                     checkInputHasError('anoDeVencimento') ? 'error' : ''
                   }
-                  mask="99"
+                  mask="9999"
                 />
+                <small>
+                  {checkInputHasError(
+                    'anoDeVencimento',
+                    form.errors.anoDeVencimento
+                  )}
+                </small>
               </InputGroup>
             </Row>
             <Botao
               className="margin-top"
               type="submit"
-              onClick={activeConfirmed}
+              onClick={() => {
+                activeConfirmed()
+              }}
             >
               Finalizar pagamento
             </Botao>
             <Botao onClick={backAdress}>Voltar para a edição de endereço</Botao>
           </PaymentContainer>
-        </>
+        </Form>
       )}
-    </Form>
+    </>
   )
 }
 

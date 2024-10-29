@@ -59,6 +59,9 @@ export const Form = styled.form`
     display: block;
     line-height: 22px;
   }
+  small {
+    color: ${cores.bege};
+  }
 `
 export const PaymentContainer = styled.div`
   display: none;
@@ -67,6 +70,11 @@ export const PaymentContainer = styled.div`
   }
 `
 export const ConfirmedContainer = styled.div`
+  display: flex;
+  .margin-top {
+    margin-top: 24px;
+  }
+  flex-direction: column;
   &.show {
     display: block;
   }

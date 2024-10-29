@@ -4,13 +4,14 @@ import { Item } from '../pages/Perfil'
 type Resposta = {
   orderId: string
 }
+
+type product = {
+  id: number
+  price: number
+}
+
 type PurchasePayload = {
-  products: [
-    {
-      id: number
-      price: number
-    }
-  ]
+  products: product[]
   delivery: {
     receiver: string
     address: {
